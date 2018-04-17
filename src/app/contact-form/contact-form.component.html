@@ -1,0 +1,64 @@
+<div class="container">
+<form #f="ngForm" (ngSubmit)="submit(f)">
+  <div class="form-group">
+  <label for="firstName">First Name</label>
+  <input required [(ngModel)]="eventObj.firstName" minlength="3" maxlength="10" name="firstName" #firstName="ngModel" id="firstName" type="text" class="form-control">
+   <div class="alert alert-danger" *ngIf="firstName.touched && !firstName.valid">
+     <div *ngIf="firstName.errors.required">First name is required</div>
+    <div *ngIf="firstName.errors.minlength">FIrst name should be minimum 3 characters</div> 
+  </div>
+  </div>
+
+  <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input required [(ngModel)]="eventObj.lastName" minlength="3" maxlength="10" name="lastName" #lastName="ngModel" id="lastName" type="text" class="form-control">
+       <div class="alert alert-danger" *ngIf="lastName.touched && !lastName.valid">
+         <div *ngIf="lastName.errors.required">Last name is required</div>
+        <div *ngIf="lastName.errors.minlength">last name should be minimum 3 characters</div> 
+      </div>
+  </div>
+
+  <div class="form-group">
+      <label for="email">Email</label>
+      <input 
+          required
+          [(ngModel)]="eventObj.email"
+          name="email"
+          id="email"
+          type="email" 
+          #email="ngModel"
+          [pattern]="emailPattern"
+          class="form-control">
+          <div class="alert alert-danger" *ngIf="email.touched && !email.valid">
+              <div>Email Not Valid</div>
+          </div>
+          <!-- <div *ngIf="email.errors.pattern"> 
+              Email not valid.
+          </div> -->
+  </div>
+
+  <div class="form-group">
+      <label for="contactNumber">Contact Number</label>
+      <input required [(ngModel)]="eventObj.contactNumber" minlength=10 maxlength=10 name="contactNumber" #contactNumber="ngModel" id="contactNumber" type="text" class="form-control">
+       <div class="alert alert-danger" *ngIf="contactNumber.touched && !contactNumber.valid">
+         <div *ngIf="contactNumber.errors.required">Contact Number is required</div>
+         <div *ngIf="contactNumber.errors.minlength">Contact Number must be minimum 10 digits.</div>
+      </div>
+  </div>
+
+  <div class="form-group">
+    <label for="status">Status</label>
+    <select multiple [(ngModel)]="eventObj.dropdown" name="dropdown" id="status" class="form-control">
+     <option *ngFor="let status of status" [value]="status.method">
+       {{status.method}}
+     </option>
+    </select>
+  </div>
+  <button [disabled]="!f.valid" class="btn btn-primary">Submit</button>
+</form>
+</div>
+
+<app-form-table [formData]="valueArray" (editForm)="editFormDetails($event)" 
+(editSelectedFLag)="flagSelected($event)" (index)="indexSelected($event)"
+
+></app-form-table>
